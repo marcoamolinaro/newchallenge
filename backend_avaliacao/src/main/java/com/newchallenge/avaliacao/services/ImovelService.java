@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.newchallenge.avaliacao.dto.ImovelDTO;
 import com.newchallenge.avaliacao.entities.Imovel;
 import com.newchallenge.avaliacao.repositories.ImovelRepository;
+import com.newchallenge.avaliacao.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ImovelService {
@@ -27,10 +28,19 @@ public class ImovelService {
 	
 	@Transactional(readOnly = true)
 	public ImovelDTO findById(Long id) {
-		Imovel result = repository.findById(id).get();
 		
-		ImovelDTO dto = new ImovelDTO(result);
+		ImovelDTO dto = null;
+		
+		try {
+			Imovel result = repository.findById(id).get();
+			dto = new ImovelDTO(result);
+			
+		} catch (Exception e) {
+			throw new ObjectNotFoundException(
+					"Imovel não encontrado! Id: " + id);
+		}
 		
 		return dto;
+
 	}
 }

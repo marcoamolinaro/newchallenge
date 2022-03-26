@@ -43,4 +43,11 @@ public class ImovelService {
 		return dto;
 
 	}
+	
+	@Transactional
+	public ImovelDTO save(Imovel imovel) {		
+		Imovel result = repository.saveAndFlush(imovel);
+		return new ImovelDTO(result);
+	}
+	
 }

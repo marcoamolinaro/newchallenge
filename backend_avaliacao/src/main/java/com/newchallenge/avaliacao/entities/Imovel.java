@@ -130,4 +130,13 @@ public class Imovel {
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public String toString() {
+		return "Imovel [id=" + id + ", descricao=" + descricao + ", logradouro=" + logradouro + ", numero=" + numero
+				+ ", bairro=" + bairro + ", cidade=" + cidade + ", uf=" + uf + ", dormitorios=" + dormitorios
+				+ ", suites=" + suites + ", area=" + area + ", valor=" + valor + "]";
+	}
+	
+	
 }

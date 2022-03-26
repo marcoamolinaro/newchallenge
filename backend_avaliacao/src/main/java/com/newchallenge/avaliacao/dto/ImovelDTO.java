@@ -136,5 +136,12 @@ public class ImovelDTO {
 		this.valor = valor;
 	}
 
+	@Override
+	public String toString() {
+		return "ImovelDTO [id=" + id + ", descricao=" + descricao + ", logradouro=" + logradouro + ", numero=" + numero
+				+ ", bairro=" + bairro + ", cidade=" + cidade + ", uf=" + uf + ", dormitorios=" + dormitorios
+				+ ", suites=" + suites + ", area=" + area + ", valor=" + valor + "]";
+	}
+
 	
 }

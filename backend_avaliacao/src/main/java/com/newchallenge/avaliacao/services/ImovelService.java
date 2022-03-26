@@ -16,38 +16,45 @@ public class ImovelService {
 
 	@Autowired
 	private ImovelRepository repository;
-	
+
 	@Transactional(readOnly = true)
 	public Page<ImovelDTO> findAll(Pageable pageable) {
 		Page<Imovel> result = repository.findAll(pageable);
-		
+
 		Page<ImovelDTO> page = result.map(x -> new ImovelDTO(x));
-		
+
 		return page;
 	}
-	
+
 	@Transactional(readOnly = true)
 	public ImovelDTO findById(Long id) {
-		
+
 		ImovelDTO dto = null;
-		
+
 		try {
 			Imovel result = repository.findById(id).get();
 			dto = new ImovelDTO(result);
-			
+
 		} catch (Exception e) {
-			throw new ObjectNotFoundException(
-					"Imovel não encontrado! Id: " + id);
+			throw new ObjectNotFoundException("Imovel não encontrado! Id: " + id);
 		}
-		
+
 		return dto;
 
 	}
-	
+
 	@Transactional
-	public ImovelDTO save(Imovel imovel) {		
+	public ImovelDTO save(Imovel imovel) {
 		Imovel result = repository.saveAndFlush(imovel);
 		return new ImovelDTO(result);
 	}
-	
+
+	@Transactional
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+		} catch (Exception e) {
+			throw new ObjectNotFoundException("Imovel não encontrado! Id: " + id);
+		}
+	}
 }

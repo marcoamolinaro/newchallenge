@@ -1,0 +1,5 @@
+insert into tb_imovel(descricao, logradouro, numero, bairro, cidade, uf, dormitorios, suites, area, valor) values ('Apartamento 1', 'Rua 1', '1', 'Bairro 1', 'São Paulo', 'SP', 3, 2, 123.00, 2500000);
+insert into tb_imovel(descricao, logradouro, numero, bairro, cidade, uf, dormitorios, suites, area, valor) values ('Apartamento 2', 'Rua 2', '2', 'Bairro 2', 'Rio de Janeiro', 'RJ', 1, 0, 60.00, 150000);
+insert into tb_imovel(descricao, logradouro, numero, bairro, cidade, uf, dormitorios, suites, area, valor) values ('Apartamento 3', 'Rua 3', '3', 'Bairro 2', 'São Paulo', 'SP', 2, 1, 75.00, 190000);
+insert into tb_imovel(descricao, logradouro, numero, bairro, cidade, uf, dormitorios, suites, area, valor) values ('Apartamento 4', 'Rua 4', '4', 'Bairro 2', 'Minas Gerais', 'BH', 2, 1, 80.00, 195000);
+insert into tb_imovel(descricao, logradouro, numero, bairro, cidade, uf, dormitorios, suites, area, valor) values ('Apartamento 5', 'Rua 5', '5', 'Bairro 2', 'São Paulo', 'SP', 2, 1, 90.00, 198000);

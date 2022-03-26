@@ -57,4 +57,13 @@ public class ImovelService {
 			throw new ObjectNotFoundException("Imovel não encontrado! Id: " + id);
 		}
 	}
+	
+	@Transactional(readOnly = true)
+	public Page<ImovelDTO> search(String cidade, Integer valor, Pageable pageable) {
+		Page<Imovel> result = repository.findDistinctByCidadeContainingAndValorLessThan(cidade, valor, pageable);
+
+		Page<ImovelDTO> page = result.map(x -> new ImovelDTO(x));
+
+		return page;
+	}
 }

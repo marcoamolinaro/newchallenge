@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.newchallenge.avaliacao.dto.ImovelDTO;
@@ -31,6 +32,11 @@ public class ImovelController {
 	@GetMapping(value = "/{id}")
 	public ImovelDTO findById(@PathVariable Long id) {
 		return service.findById(id);
+	}
+	
+	@GetMapping(value="/search")
+	public Page<ImovelDTO> search(@RequestParam String cidade, @RequestParam Integer valor, Pageable pageable) {
+		return service.search(cidade, valor, pageable);
 	}
 	
 	@DeleteMapping(value = "/{id}")

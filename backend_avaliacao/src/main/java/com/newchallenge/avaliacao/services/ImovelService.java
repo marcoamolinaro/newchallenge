@@ -1,5 +1,7 @@
 package com.newchallenge.avaliacao.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.newchallenge.avaliacao.dto.ImovelDTO;
 import com.newchallenge.avaliacao.entities.Imovel;
 import com.newchallenge.avaliacao.repositories.ImovelRepository;
+import com.newchallenge.avaliacao.repositories.impl.ImovelRepositoryCustomImpl;
 import com.newchallenge.avaliacao.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -16,6 +19,9 @@ public class ImovelService {
 
 	@Autowired
 	private ImovelRepository repository;
+	
+	@Autowired
+	private ImovelRepositoryCustomImpl repositoryCustomImpl;
 
 	@Transactional(readOnly = true)
 	public Page<ImovelDTO> findAll(Pageable pageable) {
@@ -58,12 +64,11 @@ public class ImovelService {
 		}
 	}
 	
-	@Transactional(readOnly = true)
-	public Page<ImovelDTO> search(String cidade, Integer valor, Pageable pageable) {
-		Page<Imovel> result = repository.findDistinctByCidadeContainingAndValorLessThan(cidade, valor, pageable);
+	@Transactional
+	public List<Imovel> findByCidadeAndValor(String cidade, Integer valor, String criteria) {
+		List<Imovel> result = repositoryCustomImpl.findByCidadeAndValor(cidade, valor, criteria);
 
-		Page<ImovelDTO> page = result.map(x -> new ImovelDTO(x));
-
-		return page;
+		return result;
+	
 	}
 }

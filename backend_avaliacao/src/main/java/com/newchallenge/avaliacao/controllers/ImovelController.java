@@ -1,7 +1,11 @@
 package com.newchallenge.avaliacao.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +39,21 @@ public class ImovelController {
 	}
 	
 	@GetMapping(value="/search")
-	public Page<ImovelDTO> search(@RequestParam String cidade, @RequestParam Integer valor, Pageable pageable) {
-		return service.search(cidade, valor, pageable);
+	public Page<ImovelDTO> search(@RequestParam String cidade, @RequestParam Integer valor, @RequestParam String criteria, Pageable pageable) {
+		List<Imovel> imoveis = service.findByCidadeAndValor(cidade, valor, criteria);
+		
+		List<ImovelDTO> dtos = new ArrayList<ImovelDTO>();
+		
+		for (Imovel i : imoveis) {
+			ImovelDTO dto = new ImovelDTO(i);
+			dtos.add(dto);
+		}
+		
+		final int start = (int)pageable.getOffset();
+		final int end = Math.min((start + pageable.getPageSize()), dtos.size());
+		final Page<ImovelDTO> page = new PageImpl<>(dtos.subList(start, end), pageable, dtos.size());
+				
+		return page;
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -57,14 +74,10 @@ public class ImovelController {
 	public ImovelDTO update(@RequestBody ImovelDTO imovelDTO) {
 		
 		ImovelDTO dto = service.findById(imovelDTO.getId());
-		
-		System.out.println("IMOVEL " + dto.toString());
-		
+				
 		Imovel imovel = fromDTO(imovelDTO);
 		imovel.setId(imovelDTO.getId());
-		
-		System.out.println("IMOVEL " + imovel.toString());
-		
+				
 		dto = service.save(imovel);
 		
 		return dto;
